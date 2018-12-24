@@ -1,6 +1,7 @@
 ﻿using Moq;
 using Ninject;
 using SportsStoreFrickingFinal.Domain.Abstract;
+using SportsStoreFrickingFinal.Domain.Concrete;
 using SportsStoreFrickingFinal.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -23,19 +24,18 @@ namespace SportsStoreFrickingFinal.Infrastructure
 
         private void AddBindings()
         {
-            Mock<IProductRepository> mock = new Mock<IProductRepository>();
-            mock.Setup(m => m.Products).Returns(new List<Product> {
-                    new Product { Name = "Football", Price = 25 },
-                    new Product { Name = "Surf board", Price = 179 },
-                    new Product { Name = "Running shoes", Price = 95 }
-            }.AsQueryable());
-            ninjectKernel.Bind<IProductRepository>().ToConstant(mock.Object);
+            //Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            //mock.Setup(m => m.Products).Returns(new List<Product> {
+            //        new Product { Name = "Football", Price = 25 },
+            //        new Product { Name = "Surf board", Price = 179 },
+            //        new Product { Name = "Running shoes", Price = 95 }
+            //}.AsQueryable());
+            ninjectKernel.Bind<IProductRepository>().To<EFProductRepository>();
         }
 
         protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
         {
             return controllerType == null ? null : (IController)ninjectKernel.Get(controllerType);
-        }
-        
+        }        
     }
 }

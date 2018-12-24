@@ -16,7 +16,6 @@ namespace SportsStoreFrickingFinal
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory());
-
         }
     }
 }
