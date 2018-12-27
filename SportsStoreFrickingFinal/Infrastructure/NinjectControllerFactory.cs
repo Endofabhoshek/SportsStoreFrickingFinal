@@ -5,6 +5,7 @@ using SportsStoreFrickingFinal.Domain.Concrete;
 using SportsStoreFrickingFinal.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -31,6 +32,8 @@ namespace SportsStoreFrickingFinal.Infrastructure
             //        new Product { Name = "Running shoes", Price = 95 }
             //}.AsQueryable());
             ninjectKernel.Bind<IProductRepository>().To<EFProductRepository>();
+            EmailSettings emailSettings = new EmailSettings() { WriteAsFile = bool.Parse(ConfigurationManager.AppSettings["Email.WriteAsFile"] ?? "false") };
+            ninjectKernel.Bind<IOrderProcessor>().To<EmailOrderProcessor>().WithConstructorArgument("settings", emailSettings);
         }
 
         protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)

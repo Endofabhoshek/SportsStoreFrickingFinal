@@ -1,4 +1,6 @@
-﻿using SportsStoreFrickingFinal.Infrastructure;
+﻿using SportsStoreFrickingFinal.Binders;
+using SportsStoreFrickingFinal.Domain.Entities;
+using SportsStoreFrickingFinal.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +18,7 @@ namespace SportsStoreFrickingFinal
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory());
+            ModelBinders.Binders.Add(typeof(Cart), new CartModelBinder());
         }
     }
 }
